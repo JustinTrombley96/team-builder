@@ -6,8 +6,12 @@ import CurrentTeam from './components/CurrentTeam'
 
 
 const App = () => {
+
+  //Editing
+  const [editing, setEditing] = useState(false)
+  const [editMember, setEditMember] = useState()
   //Form Hook
-  const [user, setUser] = useState(  {name: "", email: "", role: ""  }
+  const [newMember, setNewMember] = useState(  {name: "", email: "", role: ""  }
   )
   //Rendering Team Hook
   const [currentTeam, setCurrentTeam] = useState(
@@ -24,31 +28,34 @@ const App = () => {
 
 ])
 
+
   const handleChange = event => {
-    setUser ({ ...user, [event.target.name]: event.target.value})
+    setNewMember ({ ...newMember, [event.target.name]: event.target.value})
   }
 
   const handleSubmit = event => {
     event.preventDefault();
-    setCurrentTeam([...currentTeam, user])
-    setUser({name: '', email: ''})
-    console.log(user.name)
-    console.log(user.email)
-    console.log(user.role)
-    console.log("User", user)
+    setCurrentTeam([...currentTeam, newMember])
+    setNewMember({name: '', email: ''})
+    console.log(newMember.name)
+    console.log(newMember.email)
+    console.log(newMember.role)
+    console.log("New Member", newMember)
 
 
   }
 
-  const memberToEdit = event => {
+  const memberToEdit = () => {
+    setEditing(true)
 
+    setNewMember({ name: newMember.name, email: newMember.email, role: newMember.role})
 
   }
 
   return (
     <div className="App">
-      <Form handleChange={handleChange} handleSubmit={handleSubmit} user={user} setUser={setUser} />
-      <CurrentTeam currentTeam={currentTeam} memberToEdit={memberToEdit} />
+      <Form handleChange={handleChange} handleSubmit={handleSubmit} newMember={newMember} setNewMember={setNewMember} editing={editing} editMember={editMember} />
+      <CurrentTeam currentTeam={currentTeam} memberToEdit={memberToEdit} setEditing={setEditing} setEditMember={setEditMember}  />
     </div>
   );
 }
