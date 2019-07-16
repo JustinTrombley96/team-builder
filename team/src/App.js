@@ -20,7 +20,6 @@ const App = () => {
   {
     name: "Jose",
     email: 'jjjdfsk@gmail.com',
-    role: "Full-Stack"   
   },
 
 ])
