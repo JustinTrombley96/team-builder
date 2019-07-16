@@ -11,19 +11,22 @@ const App = () => {
   const [editing, setEditing] = useState(false)
   const [editMember, setEditMember] = useState()
   //Form Hook
-  const [newMember, setNewMember] = useState(  {name: "", email: "", role: ""  }
+  const [newMember, setNewMember] = useState(  {id: "", name: "", email: "", role: ""  }
   )
   //Rendering Team Hook
   const [currentTeam, setCurrentTeam] = useState(
     [
   {
+    id: 1,
     name: "Justin",
     email: 'jjjk@gmail.com',
     role: "Full-Stack"   
   },
   {
+    id: 2,
     name: "Jose",
     email: 'jjjdfsk@gmail.com',
+    role: "Full-Stack"
   },
 
 ])
