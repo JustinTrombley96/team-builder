@@ -9,28 +9,27 @@ const App = () => {
 
   //Editing
   const [editing, setEditing] = useState(false)
-  const [editMember, setEditMember] = useState()
+  const [editMember, setEditMember] = useState( {name: "", email: "", role: "", id:""  })
   //Form Hook
-  const [newMember, setNewMember] = useState(  {id: "", name: "", email: "", role: ""  }
+  const [newMember, setNewMember] = useState(  {name: "", email: "", role: "", id: "" }
   )
   //Rendering Team Hook
   const [currentTeam, setCurrentTeam] = useState(
     [
   {
-    id: 1,
     name: "Justin",
     email: 'jjjk@gmail.com',
-    role: "Full-Stack"   
+    role: "Full-Stack",
+    id: 1
   },
   {
-    id: 2,
     name: "Jose",
     email: 'jjjdfsk@gmail.com',
-    role: "Full-Stack"
+    role: "Full-Stack",
+    id: 2
   },
 
 ])
-
 
   const handleChange = event => {
     setNewMember ({ ...newMember, [event.target.name]: event.target.value})
@@ -38,27 +37,63 @@ const App = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    setCurrentTeam([...currentTeam, newMember])
-    setNewMember({name: '', email: ''})
+    let addMember = {...newMember, id: currentTeam.length + 1}
+    setCurrentTeam([...currentTeam, addMember])
+    setNewMember({name: '', email: '', role:'', id: ''})
     console.log(newMember.name)
     console.log(newMember.email)
     console.log(newMember.role)
+    console.log(newMember.id)
+    console.log("New Member", newMember)
+
+
+  }
+  const handleEditChange = event => {
+    setEditMember ({ ...editMember, [event.target.name]: event.target.value})
+  }
+
+  const handleEditSubmit = event => {
+    event.preventDefault();
+    let filteredArray = currentTeam.map(member => member.id !== editMember.id ? member : editMember)
+    // let addMember = {...editMember, id: currentTeam.length + 1}
+    setCurrentTeam(filteredArray)
+    setEditMember({name: '', email: '', role:'', id: ''})
+    console.log(newMember.name)
+    console.log(newMember.email)
+    console.log(newMember.role)
+    console.log(newMember.id)
     console.log("New Member", newMember)
 
 
   }
 
-  const memberToEdit = () => {
-    setEditing(true)
 
-    setNewMember({ name: newMember.name, email: newMember.email, role: newMember.role})
+
+  const memberToEdit = () => {
+    setNewMember({ name: newMember.name, email: newMember.email, role: newMember.role, id: newMember.id})
 
   }
 
   return (
     <div className="App">
-      <Form handleChange={handleChange} handleSubmit={handleSubmit} newMember={newMember} setNewMember={setNewMember} editing={editing} editMember={editMember} />
-      <CurrentTeam currentTeam={currentTeam} memberToEdit={memberToEdit} setEditing={setEditing} setEditMember={setEditMember}  />
+      <Form 
+        handleChange={handleChange} 
+        handleSubmit={handleSubmit} 
+        newMember={newMember} 
+        setNewMember={setNewMember} 
+        editing={editing} 
+        editMember={editMember} />
+      <CurrentTeam 
+        handleSubmit={handleSubmit} 
+        handleChange={handleChange} 
+        newMember={newMember} 
+        currentTeam={currentTeam} 
+        memberToEdit={memberToEdit} 
+        setEditing={setEditing} 
+        setEditMember={setEditMember} 
+        editMember={editMember} 
+        handleEditChange={handleEditChange}
+        handleEditSubmit={handleEditSubmit} />
     </div>
   );
 }
